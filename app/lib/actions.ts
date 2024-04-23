@@ -6,6 +6,13 @@ import { redirect } from 'next/navigation';
 
 
 
+
+export async function deleteInvoice(id: string) {
+    await sql`DELETE FROM invoices WHERE id = ${id}`;
+    revalidatePath('/dashboard/invoices');
+  }
+
+
 export async function updateInvoice(id: string, formData: FormData) {
     const UpdateInvoice = FormSchema.omit({ id: true, date: true });
     const { customerId, amount, status } = UpdateInvoice.parse({
